@@ -22,6 +22,16 @@ const router = createRouter({
           component: () => import('../views/image/ImageToLineArt.vue'),
         },
       ]
+    },
+    {
+      path: '/404',
+      component: () => import('@/views/error/404.vue'),
+      meta: { requiresAuth: false }
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      component: () => import('@/views/error/404.vue'),
+      meta: { requiresAuth: false }
     }
   ],
 })
