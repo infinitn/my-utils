@@ -1,12 +1,14 @@
 <script setup>
-import { ref, nextTick } from 'vue'
-import { useRouter } from 'vue-router'
+import {nextTick, ref} from 'vue'
+import {useRouter} from 'vue-router'
 import {
-  UploadOutlined,
-  DownloadOutlined,
-  PictureOutlined,
+  ArrowLeftOutlined,
   CheckCircleOutlined,
-  ArrowLeftOutlined
+  DownloadOutlined,
+  FileImageOutlined,
+  FileJpgOutlined,
+  PictureOutlined,
+  UploadOutlined
 } from '@ant-design/icons-vue'
 
 const router = useRouter()
@@ -93,7 +95,7 @@ const uploadChange = async (info) => {
 }
 
 // 下载图片
-const downloadImage = () => {
+const downloadImage = (type = 'png') => {
   const canvas = canvasRef.value
   if (!canvas) {
     alert('请先转换图片')
@@ -102,8 +104,9 @@ const downloadImage = () => {
 
   try {
     const link = document.createElement('a')
-    const imageData = canvas.toDataURL('image/png')
-    link.download = '黑白图片.png'
+    const quality = type === 'jpeg' ? 0.9 : 1 // JPEG 质量设置
+    const imageData = canvas.toDataURL(`image/${type}`, quality)
+    link.download = `黑白图片.${type}`
     link.href = imageData
     document.body.appendChild(link)
     link.click()
@@ -169,8 +172,10 @@ const uploadProps = {
           <!-- 原图 -->
           <div class="image-card">
             <div class="card-header">
-              <picture-outlined />
-              <span>原图</span>
+              <div class="header-left">
+                <picture-outlined />
+                <span>原图</span>
+              </div>
             </div>
             <div class="image-wrapper">
               <img
@@ -184,17 +189,32 @@ const uploadProps = {
           <!-- 处理结果 -->
           <div class="image-card">
             <div class="card-header">
-              <check-circle-outlined />
-              <span>黑白效果</span>
-              <a-button
-                type="primary"
-                @click="downloadImage"
-                class="download-btn"
-                size="middle"
-              >
-                <template #icon><download-outlined /></template>
-                保存图片
-              </a-button>
+              <div class="header-left">
+                <check-circle-outlined />
+                <span>黑白效果</span>
+              </div>
+              <a-dropdown class="download-dropdown">
+                <a-button
+                  type="primary"
+                  class="download-btn"
+                  size="middle"
+                >
+                  <template #icon><download-outlined /></template>
+                  保存图片
+                </a-button>
+                <template #overlay>
+                  <a-menu>
+                    <a-menu-item @click="downloadImage('png')">
+                      <template #icon><file-image-outlined /></template>
+                      PNG格式
+                    </a-menu-item>
+                    <a-menu-item @click="downloadImage('jpeg')">
+                      <template #icon><file-jpg-outlined /></template>
+                      JPEG格式
+                    </a-menu-item>
+                  </a-menu>
+                </template>
+              </a-dropdown>
             </div>
             <div class="image-wrapper">
               <canvas ref="canvasRef"></canvas>
@@ -215,8 +235,8 @@ const uploadProps = {
 
   .back-btn {
     position: fixed;
-    left: 32px;
-    top: 32px;
+    left: 20px;
+    top: 20px;
     font-size: 14px;
     padding: 6px 12px;
     height: auto;
@@ -381,46 +401,79 @@ const uploadProps = {
         height: fit-content;
 
         .card-header {
-          padding: 12px 16px;
+          height: 48px;
+          padding: 0 16px;
           background: #fafafa;
           border-bottom: 1px solid #f0f0f0;
           display: flex;
           align-items: center;
-          gap: 8px;
-          font-size: 16px;
+          justify-content: space-between;
+          font-size: 14px;
           color: #1f1f1f;
 
-          :deep(.anticon) {
-            color: #1890ff;
-          }
-
-          .download-btn {
-            margin-left: auto;
-            border-radius: 6px;
-            height: 32px;
-            padding: 0 16px;
-            font-weight: 500;
-            background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
-            border: none;
-            box-shadow: 0 2px 6px rgba(24, 144, 255, 0.35);
-            transition: all 0.3s ease;
-
-            &:hover {
-              transform: translateY(-1px);
-              background: linear-gradient(135deg, #40a9ff 0%, #1890ff 100%);
-              box-shadow: 0 4px 12px rgba(24, 144, 255, 0.4);
-            }
-
-            &:active {
-              transform: translateY(0);
-              background: linear-gradient(135deg, #096dd9 0%, #0050b3 100%);
-              box-shadow: 0 2px 4px rgba(24, 144, 255, 0.4);
-            }
+          .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
 
             :deep(.anticon) {
+              font-size: 16px;
+              color: #1890ff;
+            }
+          }
+
+          .download-dropdown {
+            .download-btn {
+              height: 32px;
+              padding: 0 16px;
+              border-radius: 6px;
               font-size: 14px;
-              margin-right: 6px;
+              font-weight: 500;
               color: #fff;
+              border: none;
+              background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+              box-shadow: 0 2px 6px rgba(24, 144, 255, 0.35);
+              transition: all 0.3s ease;
+
+              :deep(.anticon) {
+                font-size: 14px;
+                margin-right: 6px;
+              }
+
+              &:hover {
+                transform: translateY(-1px);
+                background: linear-gradient(135deg, #40a9ff 0%, #1890ff 100%);
+                box-shadow: 0 4px 12px rgba(24, 144, 255, 0.4);
+              }
+
+              &:active {
+                transform: translateY(0);
+                background: linear-gradient(135deg, #096dd9 0%, #0050b3 100%);
+                box-shadow: 0 2px 4px rgba(24, 144, 255, 0.4);
+              }
+            }
+          }
+
+          :deep(.ant-dropdown-menu) {
+            min-width: 120px;
+            padding: 4px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+            .ant-dropdown-menu-item {
+              border-radius: 4px;
+              padding: 8px 12px;
+              font-size: 14px;
+
+              .anticon {
+                font-size: 16px;
+                margin-right: 8px;
+                color: #1890ff;
+              }
+
+              &:hover {
+                background: #f0f7ff;
+              }
             }
           }
         }
