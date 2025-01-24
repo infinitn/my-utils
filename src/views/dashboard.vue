@@ -1,9 +1,9 @@
 <script setup>
-import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   PictureOutlined,
-  RightOutlined
+  RightOutlined,
+  UsbOutlined
 } from '@ant-design/icons-vue'
 
 const router = useRouter()
@@ -15,6 +15,14 @@ const tools = [
     desc: '将彩色图片转换为黑白效果',
     icon: PictureOutlined,
     route: 'imageToLineArt',
+    color: '#1890ff'
+  },
+  {
+    id: 2,
+    title: '敬请期待',
+    desc: '',
+    icon: UsbOutlined,
+    route: '',
     color: '#1890ff'
   }
   // 可以继续添加更多工具
