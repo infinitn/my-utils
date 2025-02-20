@@ -1,10 +1,9 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import {
-  PictureOutlined,
   RightOutlined,
-  UsbOutlined
 } from '@ant-design/icons-vue'
+import IconFont from '@/components/IconFont.vue'
 
 const router = useRouter()
 
@@ -13,19 +12,26 @@ const tools = [
     id: 1,
     title: '图片转黑白',
     desc: '将彩色图片转换为黑白效果',
-    icon: PictureOutlined,
+    icon: 'icon-xingzhuang-tupian',
     route: 'imageToLineArt',
     color: '#1890ff'
   },
   {
     id: 2,
+    title: 'JsDemo',
+    desc: 'js中各种小场景的解决办法',
+    icon: 'icon-space_demo_dashboard-fill',
+    route: 'previewPdf',
+    color: '#1890ff'
+  },
+  {
+    id: 99,
     title: '敬请期待',
     desc: '',
-    icon: UsbOutlined,
+    icon: 'icon-jingqingqidai',
     route: '',
     color: '#1890ff'
   }
-  // 可以继续添加更多工具
 ]
 
 const toTool = (route) => {
@@ -53,7 +59,7 @@ const toTool = (route) => {
           @click="toTool(tool.route)"
         >
           <div class="tool-icon" :style="{ backgroundColor: `${tool.color}15` }">
-            <component :is="tool.icon" :style="{ color: tool.color }" />
+            <IconFont :value="tool.icon" size="28" :color="tool.color" />
           </div>
           <div class="tool-content">
             <h3>{{ tool.title }}</h3>
