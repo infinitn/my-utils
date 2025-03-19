@@ -3,7 +3,7 @@ const jsdemos = {
   name: 'jsdemosModel',
   component: () => import('../views/jsdemos/index.vue'),
   redirect: {
-    name: 'previewPdf'
+    name: 'arrayHandle'
   },
   children: [
     {
