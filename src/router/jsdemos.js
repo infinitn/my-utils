@@ -7,21 +7,21 @@ const jsdemos = {
   },
   children: [
     {
-      path: 'previewpdf',
-      name: 'previewPdf',
-      component: () => import('../views/jsdemos/previewpdf.vue'),
-      meta: {
-        title: '预览PDF',
-        icon: 'icon-PDFyulan'
-      }
-    },
-    {
       path: 'arrayhandle',
       name: 'arrayHandle',
       component: () => import('../views/jsdemos/arrayhandle.vue'),
       meta: {
         title: '数组处理',
         icon: 'icon-hebingshuzu'
+      }
+    },
+    {
+      path: 'previewpdf',
+      name: 'previewPdf',
+      component: () => import('../views/jsdemos/previewpdf.vue'),
+      meta: {
+        title: '预览PDF',
+        icon: 'icon-PDFyulan'
       }
     },
     {
