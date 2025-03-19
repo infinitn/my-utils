@@ -52,7 +52,6 @@ const initPdfViewer = async () => {
 
 <style scoped lang="less">
 .preview-pdf {
-  height: 100%;
-  overflow: auto;
+  min-height: 100%;
 }
 </style>

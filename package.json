@@ -13,8 +13,10 @@
     "ant-design-vue": "^4.2.6",
     "opencv.js": "^1.2.1",
     "pinia": "^2.3.0",
+    "three": "^0.173.0",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "vue-router": "^4.5.0",
+    "wordcloud": "^1.2.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",

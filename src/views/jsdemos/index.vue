@@ -5,7 +5,7 @@ const router = useRouter()
 const route = useRoute()
 let menus = []
 router.options.routes.forEach(item => {
-  if (item.name && item.name == 'demosModel') {
+  if (item.name && item.name == 'jsdemosModel') {
     menus = item.children
   }
 })
@@ -22,7 +22,7 @@ router.options.routes.forEach(item => {
         </template>
       </a-menu>
       <div class="back-menu" @click="() => router.push('/')">
-        <IconFont value="icon-left" size="14" />
+        <IconFont value="icon-left" :size="14" />
         返回首页
       </div>
     </div>
@@ -56,6 +56,7 @@ router.options.routes.forEach(item => {
     height: 39px;
     line-height: 39px;
     text-align: center;
+    font-weight: 600;
     border-right: 1px solid #e8e8e8;
     border-top: 1px solid #e8e8e8;
     cursor: pointer;
@@ -64,7 +65,9 @@ router.options.routes.forEach(item => {
     }
   }
   .router-view-box {
+    width: calc(100% - 200px);
     padding: 20px;
+    overflow: auto;
   }
 }
 </style>

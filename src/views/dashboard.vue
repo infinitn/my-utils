@@ -1,38 +1,9 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import {
-  RightOutlined,
-} from '@ant-design/icons-vue'
 import IconFont from '@/components/IconFont.vue'
+import {gridMenu} from '@/config/dashboard.js'
 
 const router = useRouter()
-
-const tools = [
-  {
-    id: 1,
-    title: '图片转黑白',
-    desc: '将彩色图片转换为黑白效果',
-    icon: 'icon-xingzhuang-tupian',
-    route: 'imageToLineArt',
-    color: '#1890ff'
-  },
-  {
-    id: 2,
-    title: 'JsDemo',
-    desc: 'js中各种小场景的解决办法',
-    icon: 'icon-space_demo_dashboard-fill',
-    route: 'previewPdf',
-    color: '#1890ff'
-  },
-  {
-    id: 99,
-    title: '敬请期待',
-    desc: '',
-    icon: 'icon-jingqingqidai',
-    route: '',
-    color: '#1890ff'
-  }
-]
 
 const toTool = (route) => {
   router.push({ name: route })
@@ -53,20 +24,20 @@ const toTool = (route) => {
       <!-- 工具列表 -->
       <div class="tools-grid">
         <div
-          v-for="tool in tools"
+          v-for="tool in gridMenu"
           :key="tool.id"
           class="tool-card"
           @click="toTool(tool.route)"
         >
           <div class="tool-icon" :style="{ backgroundColor: `${tool.color}15` }">
-            <IconFont :value="tool.icon" size="28" :color="tool.color" />
+            <IconFont :value="tool.icon" :size="28" :color="tool.color" />
           </div>
           <div class="tool-content">
             <h3>{{ tool.title }}</h3>
             <p>{{ tool.desc }}</p>
           </div>
           <div class="tool-arrow">
-            <right-outlined />
+            <iconFont value="icon-right" :size="32" color="#1890ff" />
           </div>
         </div>
       </div>

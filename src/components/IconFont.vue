@@ -3,7 +3,7 @@ import { defineProps } from 'vue'
 import { createFromIconfontCN } from '@ant-design/icons-vue';
 
 const IconFont = createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/c/font_543083_e7eszhryozh.js',
+  scriptUrl: '//at.alicdn.com/t/c/font_543083_682iflgrgzb.js',
 });
 
 const props = defineProps({
@@ -21,8 +21,6 @@ const props = defineProps({
     default: '#000'
   }
 })
-
-console.log(props.color)
 
 </script>
 <template>

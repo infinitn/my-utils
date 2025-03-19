@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import jsdemos from './jsdemos.js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,34 +24,7 @@ const router = createRouter({
         },
       ]
     },
-    {
-      path: '/demos',
-      name: 'demosModel',
-      component: () => import('../views/demos/index.vue'),
-      redirect: {
-        name: 'previewPdf'
-      },
-      children: [
-        {
-          path: 'previewpdf',
-          name: 'previewPdf',
-          component: () => import('../views/demos/previewpdf.vue'),
-          meta: {
-            title: '预览PDF',
-            icon: 'icon-PDFyulan'
-          }
-        },
-        {
-          path: 'arrayhandle',
-          name: 'arrayHandle',
-          component: () => import('../views/demos/arrayhandle.vue'),
-          meta: {
-            title: '数组处理',
-            icon: 'icon-hebingshuzu'
-          }
-        }
-      ]
-    },
+    jsdemos,
     {
       path: '/404',
       component: () => import('@/views/error/404.vue'),
