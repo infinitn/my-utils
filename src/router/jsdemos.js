@@ -3,15 +3,15 @@ const jsdemos = {
   name: 'jsdemosModel',
   component: () => import('../views/jsdemos/index.vue'),
   redirect: {
-    name: 'arrayHandle'
+    name: 'arraySpecifiedSort'
   },
   children: [
     {
-      path: 'arrayhandle',
-      name: 'arrayHandle',
-      component: () => import('../views/jsdemos/arrayhandle.vue'),
+      path: 'arraySpecifiedSort',
+      name: 'arraySpecifiedSort',
+      component: () => import('../views/jsdemos/arrayspecifiedsort.vue'),
       meta: {
-        title: '数组处理',
+        title: '数组指定排序',
         icon: 'icon-hebingshuzu'
       }
     },
