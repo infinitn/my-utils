@@ -16,6 +16,15 @@ const jsdemos = {
       }
     },
     {
+      path: 'valuePoint',
+      name: 'valuePoint',
+      component: () => import('../views/jsdemos/valuepoint.vue'),
+      meta: {
+        title: '阀点图',
+        icon: 'icon-ziliucheng'
+      }
+    },
+    {
       path: 'previewpdf',
       name: 'previewPdf',
       component: () => import('../views/jsdemos/previewpdf.vue'),
