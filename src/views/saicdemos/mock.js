@@ -492,8 +492,136 @@ const pointData2 = [
     ]
   },
 ]
+const tanleHead = [
+  {
+    year: 2024,
+    months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  },
+  {
+    year: 2025,
+    months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  },
+  {
+    year: 2026,
+    months: [1, 2, 3, 4]
+  },
+]
+const dateArr = [
+  {
+    year: 2024,
+    months: [
+      {month: 1},
+      {month: 2},
+      {month: 3},
+      {month: 4},
+      {month: 5},
+      {month: 6},
+      {month: 7},
+      {month: 8},
+      {month: 9},
+      {month: 10},
+      {month: 11},
+      {month: 12},
+    ]
+  },
+  {
+    year: 2025,
+    months: [
+      {month: 1},
+      {month: 2},
+      {month: 3},
+      {month: 4},
+      {month: 5},
+      {month: 6},
+      {month: 7},
+      {month: 8},
+      {month: 9},
+      {month: 10},
+      {month: 11},
+      {month: 12},
+    ]
+  },
+  {
+    year: 2026,
+    months: [
+      {month: 1},
+      {month: 2},
+      {month: 3},
+      {month: 4},
+    ]
+  },
+]
+const buildDate = () => {
+  let obj = {}
+  dateArr.forEach((item, index) => {
+    item.months.forEach((month, index) => {
+      obj[`year${item.year}month${month.month}`] = {month: month.month}
+      if (item.year == 2024 && month.month == 6) {
+        obj[`year${item.year}month${month.month}`].start = 10
+        obj[`year${item.year}month${month.month}`].step = 20
+      }
+    })
+  })
+  return obj
+}
+const tablegantt = [
+  {
+    masterPlan: '项目主计划',
+    subPlan: '子项目',
+    ...buildDate(),
+  },
+  {
+    masterPlan: '项目主计划',
+    subPlan: '子项目',
+    ...buildDate(),
+    children: [
+      {
+        masterPlan: '项目主计划',
+        parentPlan: '子项目',
+        subPlan: '子项目A',
+        ...buildDate(),
+      },
+      {
+        masterPlan: '项目主计划',
+        parentPlan: '子项目',
+        subPlan: '子项目B',
+        ...buildDate(),
+      },
+    ],
+  },
+  {
+    masterPlan: '车身',
+    subPlan: '车身3',
+    isSubPlan: true,
+    subPlanNumber: 3,
+    ...buildDate(),
+  },
+  {
+    masterPlan: '车身',
+    subPlan: '车身2',
+    isSubPlan: true,
+    subPlanNumber: 0,
+    ...buildDate(),
+  },
+  {
+    masterPlan: '车身',
+    subPlan: '车身1',
+    isSubPlan: true,
+    subPlanNumber: 0,
+    ...buildDate(),
+  },
+  {
+    masterPlan: '发动机',
+    subPlan: '发动机1',
+    isSubPlan: true,
+    subPlanNumber: 1,
+    ...buildDate(),
+  },
+]
 
 export {
   pointData1,
   pointData2,
+  tanleHead,
+  tablegantt,
 }

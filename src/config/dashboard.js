@@ -16,6 +16,14 @@ const gridMenu = [
     color: '#1890ff'
   },
   {
+    id: 3,
+    title: 'SaicDemo',
+    desc: '上汽项目各种demo',
+    icon: 'icon-a-saic-motor-logo-P3m1OPJI_brandlogosnet',
+    route: 'saicdemosModel',
+    color: '#1890ff'
+  },
+  {
     id: 99,
     title: '敬请期待',
     desc: '',

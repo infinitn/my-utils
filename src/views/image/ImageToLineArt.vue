@@ -150,7 +150,7 @@ const uploadProps = {
 
       <!-- 上传区域 -->
       <div class="upload-section-box">
-        <a-upload
+      <a-upload
         v-bind="uploadProps"
         :drag="true"
         class="upload-section"
@@ -163,7 +163,7 @@ const uploadProps = {
           <p class="upload-text">点击或拖拽图片到此区域上传</p>
         </div>
       </a-upload>
-      </div>
+    </div>
 
       <!-- 图片处理区域 -->
       <div class="image-processing" v-if="imgBase64">
@@ -221,7 +221,7 @@ const uploadProps = {
             </div>
           </div>
         </div>
-      </div>
+    </div>
     </div>
   </div>
 </template>

@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import jsdemos from './jsdemos.js'
+import saicdemos from './saicdemos.js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,6 +26,7 @@ const router = createRouter({
       ]
     },
     jsdemos,
+    saicdemos,
     {
       path: '/404',
       component: () => import('@/views/error/404.vue'),
