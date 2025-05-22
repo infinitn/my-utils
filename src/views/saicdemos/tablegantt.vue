@@ -19,6 +19,7 @@ const renderColumns = () => {
       dataIndex: 'masterPlan',
       key: 'masterPlan',
       width: 100,
+      ellipsis: true,
       customCell: (record, index, column) => {
         console.log(record, index, column)
         if (index === 0 || index === 1) {
@@ -28,13 +29,10 @@ const renderColumns = () => {
           }
         }
         if (record.parentPlan) {
-          return { colSpan: 0 }
+          return { colSpan: 0, class: 'hide-expand' }
         }
         if (record.isSubPlan) {
-          return { rowSpan: record.subPlanNumber}
-        }
-        if (!record.children || record.children.length <= 0) {
-          return { class: 'hide-expand' }
+          return { rowSpan: record.subPlanNumber, class: 'hide-expand'}
         }
       }
     },
@@ -43,6 +41,7 @@ const renderColumns = () => {
       dataIndex: 'subPlan',
       key: 'subPlan',
       width: 100,
+      ellipsis: true,
       customCell: (record, index, column) => {
         if (index === 0 || index === 1) {
           return  { colSpan: 0 }
@@ -54,7 +53,6 @@ const renderColumns = () => {
     },
     ...heads.value
   ]
-  console.log(columns)
 }
 const renderHead = async (list) => {
   await list.forEach((item, index) => {
@@ -62,7 +60,6 @@ const renderHead = async (list) => {
       title: item.year,
       dataIndex: `year${item.year}`,
       key: `year${item.year}`,
-      width: 100,
       children: []
     })
     item.months.forEach((key, idx) => {
@@ -70,11 +67,7 @@ const renderHead = async (list) => {
         title: key,
         dataIndex: `year${item.year}month${key}`,
         key: `year${item.year}month${key}`,
-        width: 100,
-        customCell: (record, index, column) => {
-          console.log(record, 1111)
-          return {}
-        }
+        width: 90,
       })
     })
   })
@@ -87,12 +80,13 @@ const renderHead = async (list) => {
         :columns="columns"
         :data-source="tablegantt"
         bordered
-        expandFixed="right"
-        :scroll="{
-          x: 400,
-        }"
+        table-layout="fixed"
+        :pagination="false"
       >
-        <template #bodyCell="{record, column}">
+        <template #bodyCell="{text, record, index, column}">
+          <template v-if="index == 1 && column?.key === 'masterPlan'">
+            <sapn>{{record.subPlan}}</sapn>
+          </template>
           <template v-if="column?.key.indexOf('month') > -1">
             <span>{{record[column['key']].month}}</span>
             <template v-if="record[column['key']].start">
@@ -125,6 +119,7 @@ const renderHead = async (list) => {
   text-align: center;
   border-radius: 4px;
   color: #fff;
-  top: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 </style>

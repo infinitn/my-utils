@@ -554,8 +554,9 @@ const dateArr = [
 const buildDate = () => {
   let obj = {}
   dateArr.forEach((item, index) => {
-    item.months.forEach((month, index) => {
+    item.months.forEach((month, idx) => {
       obj[`year${item.year}month${month.month}`] = {month: month.month}
+      // 模拟业务数据（key的规则是定好的）
       if (item.year == 2024 && month.month == 6) {
         obj[`year${item.year}month${month.month}`].start = 10
         obj[`year${item.year}month${month.month}`].step = 20
@@ -591,7 +592,7 @@ const tablegantt = [
   },
   {
     masterPlan: '车身',
-    subPlan: '车身3',
+    subPlan: '车身3车身3车身3车身3车身3车身3车身3车身3车身3车身3车身3车身3车身3车身3车身3车身3',
     isSubPlan: true,
     subPlanNumber: 3,
     ...buildDate(),
@@ -611,10 +612,24 @@ const tablegantt = [
     ...buildDate(),
   },
   {
+    masterPlan: '座椅',
+    subPlan: '座椅1',
+    isSubPlan: true,
+    subPlanNumber: 1,
+    ...buildDate(),
+  },
+  {
     masterPlan: '发动机',
     subPlan: '发动机1',
     isSubPlan: true,
-    subPlanNumber: 1,
+    subPlanNumber: 2,
+    ...buildDate(),
+  },
+  {
+    masterPlan: '发动机',
+    subPlan: '发动机2',
+    isSubPlan: true,
+    subPlanNumber: 0,
     ...buildDate(),
   },
 ]
