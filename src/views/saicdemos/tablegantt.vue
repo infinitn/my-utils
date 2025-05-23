@@ -21,6 +21,7 @@ const renderColumns = () => {
       key: 'masterPlan',
       width: 100,
       ellipsis: true,
+      fixed: 'left',
       customCell: (record, index, column) => {
         console.log(record, index, column)
         if (index === 0 || index === 1) {
@@ -33,7 +34,7 @@ const renderColumns = () => {
           return { colSpan: 0, class: 'hide-expand' }
         }
         if (record.isSubPlan) {
-          return { rowSpan: record.subPlanNumber, class: 'hide-expand'}
+          return { rowSpan: record.subPlanNumber, class: 'hide-expand',}
         }
       }
     },
@@ -43,6 +44,7 @@ const renderColumns = () => {
       key: 'subPlan',
       width: 100,
       ellipsis: true,
+      fixed: 'left',
       customCell: (record, index, column) => {
         if (index === 0 || index === 1) {
           return  { colSpan: 0 }
@@ -88,6 +90,7 @@ const renderHead = async (list) => {
         bordered
         table-layout="fixed"
         :pagination="false"
+        :scroll="{x: 100}"
       >
         <template #bodyCell="{text, record, index, column}">
           <template v-if="index == 1 && column?.key === 'masterPlan'">

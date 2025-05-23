@@ -556,11 +556,6 @@ const buildDate = () => {
   dateArr.forEach((item, index) => {
     item.months.forEach((month, idx) => {
       obj[`year${item.year}month${month.month}`] = []
-      // 模拟业务数据（key的规则是定好的）
-      // if (item.year == 2024 && month.month == 6) {
-      //   obj[`year${item.year}month${month.month}`].start = 10
-      //   obj[`year${item.year}month${month.month}`].step = 20
-      // }
     })
   })
   return obj
