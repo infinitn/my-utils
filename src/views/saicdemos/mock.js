@@ -555,12 +555,12 @@ const buildDate = () => {
   let obj = {}
   dateArr.forEach((item, index) => {
     item.months.forEach((month, idx) => {
-      obj[`year${item.year}month${month.month}`] = {month: month.month}
+      obj[`year${item.year}month${month.month}`] = []
       // 模拟业务数据（key的规则是定好的）
-      if (item.year == 2024 && month.month == 6) {
-        obj[`year${item.year}month${month.month}`].start = 10
-        obj[`year${item.year}month${month.month}`].step = 20
-      }
+      // if (item.year == 2024 && month.month == 6) {
+      //   obj[`year${item.year}month${month.month}`].start = 10
+      //   obj[`year${item.year}month${month.month}`].step = 20
+      // }
     })
   })
   return obj
@@ -633,6 +633,27 @@ const tablegantt = [
     ...buildDate(),
   },
 ]
+const buildTbaleData = () => {
+  tablegantt[0].year2024month4 = [{type: 1, point: 6, status: 1}]
+  tablegantt[0].year2024month8 = [{type: 1, point: 5, status: 1}]
+  tablegantt[0].year2024month12 = [{type: 1, point: 4, status: 1}]
+  tablegantt[0].year2025month6 = [{type: 1, point: 3, status: 3}]
+  tablegantt[0].year2025month10 = [{type: 1, point: 2, status: 2}]
+  tablegantt[0].year2025month12 = [{type: 1, point: 1, status: 2}]
+  tablegantt[1].year2025month1 = [{type: 2, point: 4, status: 1}]
+  tablegantt[1].year2025month2 = [{type: 2, point: 4, status: 1}]
+  tablegantt[1].year2025month4 = [{type: 2, point: 3, status: 3}]
+  tablegantt[1].year2025month11 = [{type: 2, point: 2, status: 2}]
+  tablegantt[1].children[0].year2025month1 = [{type: 2, point: 4, status: 1}]
+  tablegantt[1].children[0].year2025month4 = [{type: 2, point: 3, status: 3}]
+  tablegantt[1].children[1].year2025month2 = [{type: 2, point: 4, status: 1}]
+  tablegantt[1].children[1].year2025month4 = [{type: 2, point: 3, status: 3}]
+  tablegantt[2].year2024month6 = [{type: 3, start: 8, step: 110, status: 1, text: '供应商定点'}]
+  tablegantt[2].year2024month10 = [{type: 3, start: 25, step: 195, status: 1, text: '全功能软件开发'}]
+  tablegantt[2].year2025month5 = [{type: 3, start: 15, step: 120, status: 3, text: '性能版发布'}, {type: 4, text: '全功能', date: '5/18'}]
+  tablegantt[4].year2025month4 = [{type: 3, start: 15, step: 90, status: 2, text: '模具优化3.5M'}]
+}
+buildTbaleData()
 
 export {
   pointData1,

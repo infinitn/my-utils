@@ -7,6 +7,7 @@ onMounted(() => {
 })
 
 const initPage = async () => {
+  console.log(tablegantt, 10101)
   await renderHead(tanleHead)
   renderColumns()
 }
@@ -68,10 +69,15 @@ const renderHead = async (list) => {
         dataIndex: `year${item.year}month${key}`,
         key: `year${item.year}month${key}`,
         width: 90,
+        align: 'center'
       })
     })
   })
 }
+// 绿色66CC00
+// 蓝色3366CC
+// 黄色FFCC33
+// 灰色C0C0C0
 </script>
 <template>
   <div class="table-gantt">
@@ -88,11 +94,54 @@ const renderHead = async (list) => {
             <sapn>{{record.subPlan}}</sapn>
           </template>
           <template v-if="column?.key.indexOf('month') > -1">
-            <span>{{record[column['key']].month}}</span>
-            <template v-if="record[column['key']].start">
-              <div class="line" :style="{width: record[column['key']].step * 10 + 'px', left: `${record[column['key']].start / 30 * 100}px`}">
-                hello
-              </div>
+            <template v-if="record[column['key']] && record[column['key']].length > 0">
+              <template v-for="(item, index) in record[column['key']]">
+                <template v-if="item?.type == 1">
+                  <div
+                    class="master-point"
+                    :class="{
+                      'master-point-1': item.status === 1,
+                      'master-point-2': item.status === 2,
+                      'master-point-3': item.status === 3,
+                      'master-point-4': item.status === 4,
+                    }"
+                  >
+                    G{{item.point}}
+                  </div>
+                </template>
+                <template v-if="item?.type == 2">
+                  <div
+                    class="sub-point"
+                    :class="{
+                      'sub-point-1': item.status === 1,
+                      'sub-point-2': item.status === 2,
+                      'sub-point-3': item.status === 3,
+                      'sub-point-4': item.status === 4,
+                    }"
+                  >
+                    G{{item.point}}
+                  </div>
+                </template>
+                <template v-if="item?.type == 3">
+                  <div
+                    class="gantt-line"
+                    :class="{
+                      'gantt-line-1': item.status === 1,
+                      'gantt-line-2': item.status === 2,
+                      'gantt-line-3': item.status === 3,
+                      'gantt-line-4': item.status === 4,
+                    }"
+                    :style="{width: item.step * 3 + 'px', left: `${item.start / 30 * 100}px`}"
+                  >{{item.text}}</div>
+                </template>
+                <template v-if="item?.type == 4">
+                  <div class="star">
+                    <div>{{item.text}}</div>
+                    <div>{{item.date}}</div>
+                    <img src="../../assets/images/star.png" alt="">
+                  </div>
+                </template>
+              </template>
             </template>
           </template>
         </template>
@@ -121,5 +170,92 @@ const renderHead = async (list) => {
   color: #fff;
   top: 50%;
   transform: translateY(-50%);
+}
+.master-point {
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  line-height: 32px;
+  color: #fff;
+  font-weight: bold;
+  &-1 {
+    background-image: url('../../assets/images/icon_like_1.png');
+    background-size: 32px;
+  }
+  &-2 {
+    background-image: url('../../assets/images/icon_like_2.png');
+    background-size: 32px;
+  }
+  &-3 {
+    background-image: url('../../assets/images/icon_like_3.png');
+    background-size: 32px;
+  }
+  &-4 {
+    background-image: url('../../assets/images/icon_like_4.png');
+    background-size: 32px;
+  }
+}
+.sub-point {
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  line-height: 32px;
+  color: #fff;
+  font-weight: bold;
+  &-1 {
+    background-image: url('../../assets/images/diamond_1.png');
+    background-size: 32px;
+  }
+  &-2 {
+    background-image: url('../../assets/images/diamond_2.png');
+    background-size: 32px;
+  }
+  &-3 {
+    background-image: url('../../assets/images/diamond_3.png');
+    background-size: 32px;
+  }
+  &-4 {
+    background-image: url('../../assets/images/diamond_4.png');
+    background-size: 32px;
+  }
+}
+.gantt-line {
+  box-sizing: border-box;
+  z-index: 1;
+  position: absolute;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  bottom: 5px;
+  border-radius: 2px;
+  &-1 {
+    border: 1px solid #66CC00;
+    background-color: #a4e2c6;
+  }
+  &-2 {
+    border: 1px solid #3366CC;
+    background-color: #44cef6;
+  }
+  &-3 {
+    border: 1px solid #FFCC33;
+    background-color: #fff143;
+  }
+  &-4 {
+    border: 1px solid #C0C0C0;
+    background-color: #D0D0D0;
+  }
+}
+.star {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  img {
+    margin: 0 auto;
+    width: 10px;
+    height: 10px;
+  }
 }
 </style>
