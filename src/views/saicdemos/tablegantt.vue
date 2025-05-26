@@ -22,6 +22,8 @@ const renderColumns = () => {
       width: 100,
       ellipsis: true,
       fixed: 'left',
+      align: 'center',
+      className: 'dark',
       customCell: (record, index, column) => {
         console.log(record, index, column)
         if (index === 0 || index === 1) {
@@ -31,7 +33,7 @@ const renderColumns = () => {
           }
         }
         if (record.parentPlan) {
-          return { colSpan: 0, class: 'hide-expand' }
+          return { colSpan: 2, class: 'hide-expand' }
         }
         if (record.isSubPlan) {
           return { rowSpan: record.subPlanNumber, class: 'hide-expand',}
@@ -45,12 +47,14 @@ const renderColumns = () => {
       width: 100,
       ellipsis: true,
       fixed: 'left',
+      align: 'center',
+      className: 'dark',
       customCell: (record, index, column) => {
         if (index === 0 || index === 1) {
           return  { colSpan: 0 }
         }
         if (record.parentPlan) {
-          return { colSpan: 2 }
+          return { colSpan: 0 }
         }
       }
     },
@@ -63,6 +67,7 @@ const renderHead = async (list) => {
       title: item.year,
       dataIndex: `year${item.year}`,
       key: `year${item.year}`,
+      className: 'dark',
       children: []
     })
     item.months.forEach((key, idx) => {
@@ -71,7 +76,8 @@ const renderHead = async (list) => {
         dataIndex: `year${item.year}month${key}`,
         key: `year${item.year}month${key}`,
         width: 90,
-        align: 'center'
+        align: 'center',
+        className: 'light',
       })
     })
   })
@@ -95,6 +101,9 @@ const renderHead = async (list) => {
         <template #bodyCell="{text, record, index, column}">
           <template v-if="index == 1 && column?.key === 'masterPlan'">
             <sapn>{{record.subPlan}}</sapn>
+          </template>
+          <template v-if="column?.key == 'masterPlan' && record.parentPlan">
+            <span>{{record.subPlan}}</span>
           </template>
           <template v-if="column?.key.indexOf('month') > -1">
             <template v-if="record[column['key']] && record[column['key']].length > 0">
@@ -156,109 +165,104 @@ const renderHead = async (list) => {
 <style scoped lang="less">
 .table-gantt {
   width: 100%;
-}
-/deep/.hide-expand {
-  .ant-table-row-expand-icon.ant-table-row-expand-icon-spaced {
-    display: none !important;
+  /deep/th.dark {
+    background-color: #1677ff;
+    color: #fff;
   }
-}
-.line {
-  z-index: 1;
-  position: absolute;
-  height: 20px;
-  line-height: 20px;
-  background: red;
-  text-align: center;
-  border-radius: 4px;
-  color: #fff;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.master-point {
-  width: 32px;
-  height: 32px;
-  text-align: center;
-  line-height: 32px;
-  color: #fff;
-  font-weight: bold;
-  &-1 {
-    background-image: url('../../assets/images/icon_like_1.png');
-    background-size: 32px;
+  /deep/th.light {
+    background-color: #91caff;
   }
-  &-2 {
-    background-image: url('../../assets/images/icon_like_2.png');
-    background-size: 32px;
+  /deep/.hide-expand {
+    .ant-table-row-expand-icon.ant-table-row-expand-icon-spaced {
+      display: none !important;
+    }
   }
-  &-3 {
-    background-image: url('../../assets/images/icon_like_3.png');
-    background-size: 32px;
+  .master-point {
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    line-height: 32px;
+    color: #fff;
+    font-weight: bold;
+    &-1 {
+      background-image: url('../../assets/images/icon_like_1.png');
+      background-size: 32px;
+    }
+    &-2 {
+      background-image: url('../../assets/images/icon_like_2.png');
+      background-size: 32px;
+    }
+    &-3 {
+      background-image: url('../../assets/images/icon_like_3.png');
+      background-size: 32px;
+    }
+    &-4 {
+      background-image: url('../../assets/images/icon_like_4.png');
+      background-size: 32px;
+    }
   }
-  &-4 {
-    background-image: url('../../assets/images/icon_like_4.png');
-    background-size: 32px;
+  .sub-point {
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    line-height: 32px;
+    color: #fff;
+    font-weight: bold;
+    &-1 {
+      background-image: url('../../assets/images/diamond_1.png');
+      background-size: 32px;
+    }
+    &-2 {
+      background-image: url('../../assets/images/diamond_2.png');
+      background-size: 32px;
+    }
+    &-3 {
+      background-image: url('../../assets/images/diamond_3.png');
+      background-size: 32px;
+    }
+    &-4 {
+      background-image: url('../../assets/images/diamond_4.png');
+      background-size: 32px;
+    }
   }
-}
-.sub-point {
-  width: 32px;
-  height: 32px;
-  text-align: center;
-  line-height: 32px;
-  color: #fff;
-  font-weight: bold;
-  &-1 {
-    background-image: url('../../assets/images/diamond_1.png');
-    background-size: 32px;
+  .gantt-line {
+    box-sizing: border-box;
+    z-index: 1;
+    position: absolute;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    bottom: 5px;
+    border-radius: 2px;
+    &-1 {
+      border: 1px solid #66CC00;
+      background-color: #a4e2c6;
+    }
+    &-2 {
+      border: 1px solid #3366CC;
+      background-color: #44cef6;
+    }
+    &-3 {
+      border: 1px solid #FFCC33;
+      background-color: #fff143;
+    }
+    &-4 {
+      border: 1px solid #C0C0C0;
+      background-color: #D0D0D0;
+    }
   }
-  &-2 {
-    background-image: url('../../assets/images/diamond_2.png');
-    background-size: 32px;
-  }
-  &-3 {
-    background-image: url('../../assets/images/diamond_3.png');
-    background-size: 32px;
-  }
-  &-4 {
-    background-image: url('../../assets/images/diamond_4.png');
-    background-size: 32px;
-  }
-}
-.gantt-line {
-  box-sizing: border-box;
-  z-index: 1;
-  position: absolute;
-  height: 20px;
-  line-height: 20px;
-  text-align: center;
-  bottom: 5px;
-  border-radius: 2px;
-  &-1 {
-    border: 1px solid #66CC00;
-    background-color: #a4e2c6;
-  }
-  &-2 {
-    border: 1px solid #3366CC;
-    background-color: #44cef6;
-  }
-  &-3 {
-    border: 1px solid #FFCC33;
-    background-color: #fff143;
-  }
-  &-4 {
-    border: 1px solid #C0C0C0;
-    background-color: #D0D0D0;
-  }
-}
-.star {
-  z-index: 1;
-  position: absolute;
-  top: 0;
-  font-size: 12px;
-  line-height: 14px;
-  text-align: center;
-  img {
-    margin: 0 auto;
-    width: 10px;
-    height: 10px;
+  .star {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+    img {
+      margin: 0 auto;
+      width: 10px;
+      height: 10px;
+    }
   }
 }
 </style>

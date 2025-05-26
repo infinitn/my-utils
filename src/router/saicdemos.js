@@ -3,9 +3,18 @@ const saicdemos = {
   name: 'saicdemosModel',
   component: () => import('../views/saicdemos/index.vue'),
   redirect: {
-    name: 'tableGantt'
+    name: 'projectPlanOverview'
   },
   children: [
+    {
+      path: 'projectplanoverview',
+      name: 'projectPlanOverview',
+      component: () => import('../views/saicdemos/projectplanoverview.vue'),
+      meta: {
+        title: '项目计划概览',
+        icon: 'icon-space_demo_dashboard-fill'
+      }
+    },
     {
       path: 'tablegantt',
       name: 'tableGantt',
