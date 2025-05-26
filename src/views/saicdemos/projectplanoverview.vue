@@ -107,6 +107,7 @@ const goTbaleGantt = (val) => {
       :columns="columns"
       :data-source="list"
       :scroll="{x: 100}"
+      :pagination="false"
     >
       <template #bodyCell="{ text, record, index, column }">
         <div v-if="column?.dataIndex === 'name'">
