@@ -11,6 +11,7 @@
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
     "ant-design-vue": "^4.2.6",
+    "dayjs": "^1.11.13",
     "opencv.js": "^1.2.1",
     "pinia": "^2.3.0",
     "three": "^0.173.0",

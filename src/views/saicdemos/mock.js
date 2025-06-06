@@ -510,7 +510,7 @@ const dateArr = [
   {
     year: 2024,
     months: [
-      {month: 1},
+      {month: 1, aaa: [{type: 2, point: 2, status: 2}]},
       {month: 2},
       {month: 3},
       {month: 4},

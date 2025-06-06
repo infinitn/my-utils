@@ -1,11 +1,17 @@
 <script setup>
 import { onMounted, ref, reactive } from 'vue'
+import dayjs from "dayjs";
 import { tablegantt, tanleHead } from "@/views/saicdemos/mock.js";
+import { VerticalLeftOutlined, VerticalRightOutlined } from '@ant-design/icons-vue'
 
 onMounted(() => {
   initPage()
 })
 
+const currentDate = reactive({
+  yearMonth: `year${dayjs().format('YYYY')}month${dayjs().format('M')}`,
+  day: dayjs().format('DD'),
+})
 const initPage = async () => {
   console.log(tablegantt, 10101)
   await renderHead(tanleHead)
@@ -13,13 +19,13 @@ const initPage = async () => {
 }
 let columns = ref([])
 let heads = ref([])
-const renderColumns = () => {
-  columns.value = [
+const renderColumns = (show = true) => {
+  const showSubHead = [
     {
       title: '计划',
       dataIndex: 'masterPlan',
       key: 'masterPlan',
-      width: 100,
+      width: 120,
       ellipsis: true,
       fixed: 'left',
       align: 'center',
@@ -58,6 +64,29 @@ const renderColumns = () => {
         }
       }
     },
+  ]
+  const hideSubHead = [
+    {
+      title: '计划',
+      dataIndex: 'masterPlan',
+      key: 'masterPlan',
+      width: 120,
+      ellipsis: true,
+      fixed: 'left',
+      align: 'center',
+      className: 'dark',
+      customCell: (record, index, column) => {
+        if (record.isSubPlan) {
+          return { rowSpan: record.subPlanNumber, class: 'hide-expand',}
+        }
+        return {
+          class: 'hide-expand'
+        }
+      }
+    },
+  ]
+  columns.value = [
+    ...show ? showSubHead : hideSubHead,
     ...heads.value
   ]
 }
@@ -86,6 +115,12 @@ const renderHead = async (list) => {
 // 蓝色3366CC
 // 黄色FFCC33
 // 灰色C0C0C0
+const showSubPlan = ref(true)
+const handleChangePackup = () => {
+  console.log(111)
+  showSubPlan.value = !showSubPlan.value
+  renderColumns(showSubPlan.value)
+}
 </script>
 <template>
   <div class="table-gantt">
@@ -98,7 +133,24 @@ const renderHead = async (list) => {
         :pagination="false"
         :scroll="{x: 100}"
       >
+        <template #headerCell="{title, column}">
+          <template v-if="column?.key == 'masterPlan'">
+            <div>
+              <span>计划</span>
+              <VerticalLeftOutlined v-if="!showSubPlan" class="pack-up-btn" @click="handleChangePackup" />
+            </div>
+          </template>
+          <template v-if="column?.key == 'subPlan'">
+            <div>
+              <span>子计划</span>
+              <VerticalRightOutlined v-if="showSubPlan" class="pack-up-btn" @click="handleChangePackup" />
+            </div>
+          </template>
+        </template>
         <template #bodyCell="{text, record, index, column}">
+          <template v-if="column?.key === currentDate.yearMonth">
+            <div class="current-date" :style="{left: `${currentDate.day * 3}px`}"></div>
+          </template>
           <template v-if="index == 1 && column?.key === 'masterPlan'">
             <sapn>{{record.subPlan}}</sapn>
           </template>
@@ -176,6 +228,25 @@ const renderHead = async (list) => {
     .ant-table-row-expand-icon.ant-table-row-expand-icon-spaced {
       display: none !important;
     }
+    .ant-table-row-indent {
+      display: none !important;
+    }
+  }
+  .pack-up-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+  }
+  .current-date {
+    z-index: 3;
+    position: absolute;
+    top: 0;
+    height: calc(100% + 2px);
+    border-right: 1px dashed #f00;
   }
   .master-point {
     width: 32px;
