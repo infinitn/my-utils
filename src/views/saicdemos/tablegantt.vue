@@ -89,6 +89,7 @@ const renderColumns = (show = true) => {
     ...show ? showSubHead : hideSubHead,
     ...heads.value
   ]
+  console.log(columns.value, 929292)
 }
 const renderHead = async (list) => {
   await list.forEach((item, index) => {
@@ -110,6 +111,30 @@ const renderHead = async (list) => {
       })
     })
   })
+  getSummaryRow()
+}
+let summaryRow = ref([])
+const getSummaryRow = () => {
+  let arr = []
+  heads.value.forEach(item => {
+    arr.push(...item.children)
+  })
+  summaryRow.value = [
+    [
+      {masterPlan: '项目主计划',
+        subPlan: '子项目',},
+      {masterPlan: '项目主计划',
+        subPlan: '子项目',},
+      ...arr
+    ],
+    [
+      {masterPlan: '项目主计划',
+        subPlan: '子项目',},
+      {masterPlan: '项目主计划',
+        subPlan: '子项目',},
+      ...arr
+    ]
+  ]
 }
 // 绿色66CC00
 // 蓝色3366CC
@@ -121,6 +146,18 @@ const handleChangePackup = () => {
   showSubPlan.value = !showSubPlan.value
   renderColumns(showSubPlan.value)
 }
+
+const renderSummaryCell = (index) => {
+  if (showSubPlan.value) {
+    return index === 0 ? 2 : index === 1 ? 0 : 1
+  }
+  return index === 0 ? 1 : index === 1 ? 0 : 1
+}
+let showMore = ref(false)
+const clickMasterPlan = () => {
+  console.log(158)
+  showMore.value = !showMore.value
+}
 </script>
 <template>
   <div class="table-gantt">
@@ -131,8 +168,31 @@ const handleChangePackup = () => {
         bordered
         table-layout="fixed"
         :pagination="false"
-        :scroll="{x: 100}"
+        :scroll="{x: 100,  y: 300}"
       >
+        <template #summary>
+          <a-table-summary fixed="top">
+            <a-table-summary-row v-for="(sRow, idx) in summaryRow" >
+              <template v-if="idx === 0 || showMore && idx >= 1">
+                <a-table-summary-cell
+                    v-for="(item, index) in sRow"
+                    :key="index"
+                    :index="index"
+                    align="center"
+                    :col-span="renderSummaryCell(index)"
+                >
+                  <template v-if="idx === 0 && index === 0">
+                    <div class="summary-title" @click="clickMasterPlan">(加号){{item.masterPlan}}</div>
+                  </template>
+                  <template v-if="idx === 1 && index === 0">
+                    <div class="summary-title">{{item.subPlan}}</div>
+                  </template>
+                  <template v-if="index > 1">{{item.title}}</template>
+                </a-table-summary-cell>
+              </template>
+            </a-table-summary-row>
+          </a-table-summary>
+        </template>
         <template #headerCell="{title, column}">
           <template v-if="column?.key == 'masterPlan'">
             <div>
