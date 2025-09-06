@@ -22,12 +22,18 @@ onMounted(() => {
   arr1.sort((a, b) => orderMap.get(a.name) - orderMap.get(b.name))
 
   console.log(arr1, JSON.stringify(arr1), 'arr1') // 输出排序后的arr1
+  window.opener.focus()
+  // setTimeout(() => {
+  //   window.open('javescript:;', 'hello2')
+  // }, 1000)
 })
-
+const openWin = () => {
+  window.open('javescript:;', 'hello2')
+}
 </script>
 <template>
   <div class="arr-handle">
-    <div class="explanation">
+    <div class="explanation" @click="openWin">
       说明：根据特定顺序对数组进行排序
     </div>
     <div class="container">

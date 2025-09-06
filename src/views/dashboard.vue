@@ -2,11 +2,22 @@
 import { useRouter } from 'vue-router'
 import IconFont from '@/components/IconFont.vue'
 import {gridMenu} from '@/config/dashboard.js'
+import {onMounted} from "vue";
 
 const router = useRouter()
-
+onMounted(() => {
+  window.name = 'hello2'
+  console.log(location.href)
+})
 const toTool = (route) => {
-  router.push({ name: route })
+  console.log(window)
+  if (route === '') {
+    const newWin = window.open('http://localhost:5173/jsdemos', 'hello');
+    window.focus();
+  } else {
+    router.push({ name: route });
+  }
+  return false;
 }
 </script>
 

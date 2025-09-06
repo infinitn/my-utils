@@ -41,7 +41,25 @@ const jsdemos = {
         title: '词云',
         icon: 'icon-ciyuntu'
       }
-    }
+    },
+    {
+      path: 'nows',
+      name: 'nows',
+      component: () => import('../views/jsdemos/nows.vue'),
+      meta: {
+        title: 'now',
+        icon: 'icon-ciyuntu'
+      }
+    },
+    {
+      path: 'baidu',
+      name: 'baidu',
+      component: () => import('../views/jsdemos/baidu.vue'),
+      meta: {
+        title: 'baidu',
+        icon: 'icon-ciyuntu'
+      }
+    },
   ]
 }
 
